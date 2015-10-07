@@ -48,8 +48,10 @@ int main(int argc, char *argv[]) {
 								printf("%c", c);
 								x++;
 							}
-							count = 1;
-							continue;
+							if(c == '\n') {
+								count = 1;
+								continue;
+							}
 						//printf("\n");
 						}	
 						
