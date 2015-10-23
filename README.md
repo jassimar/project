@@ -1,2 +1,2 @@
-# project
-MIni Project
+# Mini Project
+Replicating the Linux/Unix command "cut"
