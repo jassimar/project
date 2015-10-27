@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 		i = a.where + 1;
 		j = 0;
 	}
-	if(a.complement == FALSE) {
+	if(a.complement == NO) { /* This means the complement option is not mentioned */
 		switch(a.type) {
 			case 'b' :
 			case 'c' :
@@ -137,11 +137,11 @@ int main(int argc, char *argv[]) {
 				break;
 		}
 	}
-	else {
+	else if(a.complement == YES) {
 		switch(a.type) {
 			case 'b' :
 			case 'c' :
-					
+				
 				while(read(fd, &c, 1)) {
 					static int count = 1;
 					
@@ -152,7 +152,7 @@ int main(int argc, char *argv[]) {
 						}
 							//printf("%c", c);
 								
-						}
+					}
 					else if(count == atoi(&argv[i][j])) {
 						//printf("%c", c);
 						if(argv[i][j + 1] != '-') {
@@ -188,7 +188,7 @@ int main(int argc, char *argv[]) {
 							
 						}
 					}
-	
+		
 					printf("%c", c);	
 					count++;
 					if(c == '\n') {
@@ -197,11 +197,12 @@ int main(int argc, char *argv[]) {
 						count = 1;
 					}
 					
-						
-					
-				}		
+							
+				
+				}	
 				break;
 			case 'f' :
+				
 				if(a.delim == '\0')
 					delim = '\t';
 				else
@@ -215,7 +216,7 @@ int main(int argc, char *argv[]) {
 							continue;
 							//printf("%c", c);
 						}
-						
+					
 					}
 					if(count == atoi(&argv[i][j])) { 
 						while(c != delim && c != '\n') {
@@ -223,7 +224,7 @@ int main(int argc, char *argv[]) {
 							read(fd, &c, 1);
 						
 						}
-							
+						
 						if(argv[i][j + 1] == '-') { 
 							if(argv[i][j + 2] == '\0') { //-f1-
 								while(c != '\n') {
@@ -251,20 +252,20 @@ int main(int argc, char *argv[]) {
 							continue;
 						}
 				
-					}
+					}	
 					printf("%c", c);
 					if(c == delim)	
 						count++;
 					if(c == '\n') {
 						//printf("\n");
 						count = 1;
-					}
+					}	
 			
 				
 			
 				}	
-				break;	
-		}
-	}		
-	return 0;	
+				break;
+			}	
+	}			
+	return 0;		
 }		

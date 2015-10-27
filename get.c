@@ -3,10 +3,10 @@ arguments get(int argc, char *argv[]) {
 	int i = 1;
 	arguments a;
 	a.delim = '\0';
-	a.complement = FALSE;
+	a.complement = NO;
 	while(i < argc) {
-		if(argv[i][0] == '-') {
-			if(argv[i][1] != 'd') {
+		if(argv[i][0] == '-' && argv[i][1] != '-') {
+			if(argv[i][1] != 'd' ) {
 				a.type = argv[i][1];
 				a.where = i;
 				if(argv[i][2] == '\0') {
@@ -20,14 +20,16 @@ arguments get(int argc, char *argv[]) {
 				if(argv[i][2] != '\0') 
 					a.delim = argv[i][2];
 				else {
-					a.delim = argv[i+1][0];
+					a.delim = argv[i + 1][0];
 					i++;
 				}
 			}
-			if(argv[i][1] == '-' && argv[i][2] == 'c') /* For the --complement option */
-				a.complement = TRUE;
+			
 		
 		}
+		else if(argv[i][1] == '-' && argv[i][2] == 'c') /* For the --complement option */
+				a.complement = YES;
+
 		else
 			strcpy(a.filename, argv[i]);
 		
@@ -59,12 +61,12 @@ int errorcheck(int argc, char **argv) {
 					k = 2;
 				}
 				if(atoi(&argv[j][k]) == 0 && argv[j][k] != 'c') {
-					printf("Numbering starts from 1");
+					printf("Error: Numbering starts from 1\n");
 					return 1;
 				}
-				if(argv[j][k + 1] == '-') {
+				if(argv[j][k + 1] == '-' && argv[j][k + 2] != '\0') {
 					if(atoi(&argv[j][k]) > atoi(&argv[j][k + 2])) {
-						printf("Decreasing range ");
+						printf("Error: Decreasing range\n");
 						return 1;
 					}
 				} 
@@ -74,7 +76,7 @@ int errorcheck(int argc, char **argv) {
 		
 		}
 		if(delim && type != 'f') {
-			printf("Delimeter can only be used for fields");
+			printf("Error: Delimeter can only be used for fields\n");
 			return 1;
 		}
 		/*else

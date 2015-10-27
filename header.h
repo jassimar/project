@@ -8,8 +8,8 @@
 
 #define TYPE1 1
 #define TYPE2 2
-#define TRUE 1
-#define FALSE 0
+#define YES 1
+#define NO 0
 typedef struct arguments {
 	char type;
 	int j; /* to tell if -c1 or -c 1 i.e. if there is spacing between the arguments */
