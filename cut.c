@@ -1,4 +1,20 @@
 #include "header.h"
+/* cut -- A function replicating the LINUX command 'cut'.
+   Copyright (C) 2015  jassim.15@gmail.com Jassim AR..
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+
 int main(int argc, char *argv[]) {
 	
 	arguments a;
@@ -9,6 +25,9 @@ int main(int argc, char *argv[]) {
 	FILE *fp;
 	fp = fopen(a.filename, "r");
 	long bytes;
+	char delim2[10];
+	if(a.changedelimcheck)
+		strcpy(delim2, a.changedelim);
 	if(fp == NULL) {
 		perror("Error");
 		return 1;
@@ -109,9 +128,12 @@ int main(int argc, char *argv[]) {
 					} 
 							
 					if(argv[i][j] == '-') {
-						if(count <= atoi(&argv[i][j + 1]) && c != '\n')
-							printf("%c", c);
-						
+						if(count <= atoi(&argv[i][j + 1]) && c != '\n') {
+							if(c == delim && a.changedelimcheck)
+								printf("%s", delim2);
+							else
+								printf("%c", c);
+						}
 					}
 					if(count == atoi(&argv[i][j])) {
 						while(c != delim && c != '\n') {
@@ -126,21 +148,33 @@ int main(int argc, char *argv[]) {
 						if(argv[i][j + 1] == '-') {
 							if(argv[i][j + 2] == '\0') {
 								while(c != '\n') {
-									printf("%c", c);
+									if(c == delim && a.changedelimcheck)
+										printf("%s", delim2);
+									else
+										printf("%c", c);
 									fscanf(fp, "%c", &c);
 							
 								}
 							}
 							else {
 								x = count;
-								printf("%c", c);
+								if(a.changedelimcheck)
+									printf("%s", delim2);
+								else
+									printf("%c", c);
 								while(x < atoi(&argv[i][j + 2]) && fscanf(fp, "%c", &c) != EOF) {
 									if(c == '\n') 											break;
-									printf("%c", c);
+									if(c == delim) {
+										x++;
+										
+									}
+									if(c == delim && a.changedelimcheck)
+										printf("%s", delim2);		
+									else
+										printf("%c", c);
 									//read(fd, &c, 1);
 							
-									if(c == delim)
-										x++;
+									
 								}
 							
 							}	
@@ -213,7 +247,6 @@ int main(int argc, char *argv[]) {
 							
 						}
 					}
-		
 					printf("%c", c);	
 					count++;
 					if(c == '\n') {
@@ -297,8 +330,11 @@ int main(int argc, char *argv[]) {
 							continue;
 						}
 				
-					}	
-					printf("%c", c);
+					}
+					if(c == delim && a.changedelimcheck)
+						printf("%s", delim2);
+					else	
+						printf("%c", c);
 					if(c == delim)	
 						count++;
 					if(c == '\n') {

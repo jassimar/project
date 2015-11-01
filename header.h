@@ -19,7 +19,9 @@ typedef struct arguments {
 	int where; /* To tell at which index the option is */
 	int complement; /* To mention if the --complement is there */
 	int delim_surpress; /* To mention if the -s option is there */
-	char filename[20];
+	char filename[20]; 
+	int changedelimcheck; /* If the user wants to change the output delim, i.e. --output-delimeter=STRING option */
+	char changedelim[10]; /* The string to which it changes */
 	char delim; /* This is if the user wants to enter his own delimeter. The default is '\t' */ 
 }arguments;
 
