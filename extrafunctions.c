@@ -29,7 +29,6 @@ arguments get(int argc, char *argv[]) {
 			else /* -s option */
 				a.delim_surpress = YES;
 			
-		
 		}
 		else if(argv[i][1] == '-') {
 			if(argv[i][2] == 'c') /* For the --complement option */
@@ -131,12 +130,13 @@ printf("Usage: ./project OPTION... [FILE]...\n");
 printf("Print selected parts of lines from each FILE to standard output.\n\n");
 
 printf("Mandatory arguments to long options are mandatory for short options too.\n");
-printf("  -b, --bytes=LIST        select only these bytes\n");
-printf("  -c, --characters=LIST   select only these characters\n");
-printf("  -d, --delimiter=DELIM   use DELIM instead of TAB for field delimiter\n");
-printf("  -f, --fields=LIST       select only these fields;  also print any line\n");
+printf("  -b,                     select only these bytes\n");
+printf("  -c,                     select only these characters\n");
+printf("  -d,                     use DELIM instead of TAB for field delimiter\n");
+printf("  -f,                     select only these fields;  also print any line\n");
 printf("                            that contains no delimiter character, unless\n");
 printf("                            the -s option is specified\n");
+printf("  -l		          select only these lines(Not availiable in the 'cut' function)\n");
 printf("  -n                      (ignored)\n");
 printf("      --complement        complement the set of selected bytes, characters\n");
 printf("                            or fields\n");

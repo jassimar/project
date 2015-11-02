@@ -1,5 +1,5 @@
 #include "header.h"
-/* cut -- A function replicating the LINUX command 'cut'.
+/* cut - remove parts of lines of files.
    Copyright (C) 2015  jassim.15@gmail.com Jassim AR..
 
    This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,6 @@ int main(int argc, char *argv[]) {
 	char c, delim;
 	int i, j, x, check;
 	a = get(argc, argv);
-	//printf("%s", a.filename);
 	FILE *fp;
 	fp = fopen(a.filename, "r");
 	long bytes;
@@ -194,7 +193,43 @@ int main(int argc, char *argv[]) {
 			
 				}
 				break;
-		}
+			case 'l': 
+				while(fscanf(fp, "%c", &c) != EOF) {
+					static int count = 1;
+					if(argv[i][j] == '-') {
+						if(count <= atoi(&argv[i][j + 1])) 
+							printf("%c", c);
+					}
+					if(count == atoi(&argv[i][j])) {
+						printf("%c", c);
+						while(fscanf(fp, "%c", &c) != EOF) {
+							printf("%c", c);
+							if(c == '\n')
+								break;
+						}
+						if(argv[i][j + 1] == '-') {
+							if(argv[i][j + 2] == '\0') {
+								while(fscanf(fp, "%c", &c) != EOF)
+									printf("%c", c);
+							}
+							else {
+								x = count;
+								
+								while(x < atoi(&argv[i][j + 2]) && fscanf(fp, "%c", &c) != EOF) {
+									printf("%c", c);
+									if(c == '\n')
+										x++;
+								}
+							}
+						}
+					}
+					if(c == '\n')
+						count++;
+				}
+				break;				
+	
+
+		}		
 	}
 	else if(a.complement == YES) {
 		switch(a.type) {
@@ -346,7 +381,50 @@ int main(int argc, char *argv[]) {
 			
 				}	
 				break;
-			}	
+			case 'l': 
+				while(fscanf(fp, "%c", &c) != EOF) {
+					static int count = 1;
+					if(argv[i][j] == '-') {
+						if(count <= atoi(&argv[i][j + 1])) {
+							if(c == '\n')
+								count++;
+							continue; 
+							//printf("%c", c);
+						}
+					}
+					if(count == atoi(&argv[i][j])) {
+						//printf("%c", c);
+						while(fscanf(fp, "%c", &c) != EOF) {
+							//printf("%c", c);
+							if(c == '\n')
+								break;
+							else
+								continue;
+						}
+						if(argv[i][j + 1] == '-') {
+							if(argv[i][j + 2] == '\0') {
+								while(fscanf(fp, "%c", &c) != EOF)
+									continue;
+							}
+							else {
+								x = count;
+								
+								while(x < atoi(&argv[i][j + 2]) && fscanf(fp, "%c", &c) != EOF) {
+									
+									if(c == '\n')
+										x++;
+									else
+										continue;
+								}
+							}
+						}
+					}
+					printf("%c", c);	
+					if(c == '\n') 
+						count++;
+				}
+				break;	
+		}	
 	}			
 	return 0;		
 }		
