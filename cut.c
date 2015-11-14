@@ -13,38 +13,45 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 int main(int argc, char *argv[]) {
 	
 	arguments a;
 	char c, delim;
 	int i, j, x, check;
-	a = get(argc, argv);
+	a = get(argc, argv); /* Retrieving the arguments from command line and storing it in 'a' */
 	FILE *fp;
 	fp = fopen(a.filename, "r");
 	long bytes;
 	char delim2[10];
+
 	if(a.changedelimcheck)
 		strcpy(delim2, a.changedelim);
+
 	if(fp == NULL) {
 		perror("Error");
 		return 1;
 	}
+
 	int error;
+
 	error = errorcheck(argc, argv);
 	if(error) {
 		printf("Try './project --help' for more information.\n");
 		exit(1);
 	}
+
 	if(a.j == TYPE1) {
 		i = a.where;
 		j = 2;
 	}
+
 	else {
 		i = a.where + 1;
 		j = 0;
 	}
+
 	if(a.complement == NO) { /* This means the complement option is not mentioned */
 		switch(a.type) {
 			case 'b' :
@@ -285,8 +292,6 @@ int main(int argc, char *argv[]) {
 					printf("%c", c);	
 					count++;
 					if(c == '\n') {
-						//if(argv[i][j + 1] != '-' || argv[i][j + 2] != '\0')
-						//	printf("\n");
 						count = 1;
 					}
 					
@@ -314,7 +319,7 @@ int main(int argc, char *argv[]) {
 						}
 						
 						if(check != 0) {
-							//printf("%lu  ", bytes);
+							
 							fseek(fp, bytes - 1, SEEK_SET);
 							fscanf(fp, "%c", &c);
 							
@@ -327,13 +332,13 @@ int main(int argc, char *argv[]) {
 							if(c == delim)
 								count++;
 							continue;
-							//printf("%c", c);
+							
 						}
 					
 					}
 					if(count == atoi(&argv[i][j])) { 
 						while(c != delim && c != '\n') {
-							//printf("%c", c);
+							
 							fscanf(fp, "%c", &c);
 						
 						}
@@ -341,7 +346,7 @@ int main(int argc, char *argv[]) {
 						if(argv[i][j + 1] == '-') { 
 							if(argv[i][j + 2] == '\0') { //-f1-
 								while(c != '\n') {
-									//printf("%c", c);
+									
 									fscanf(fp, "%c", &c);
 							
 								}
@@ -350,13 +355,10 @@ int main(int argc, char *argv[]) {
 								x = count;
 								//printf("%c", c);
 								while(x < atoi(&argv[i][j + 2]) && c != '\n' && fscanf(fp, "%c", &c) != EOF) {
-									//printf("%c", c);
-									//read(fd, &c, 1);
-							
 									if(c == delim)
 										x++;
 								}
-							//printf("\n");
+							
 							}	
 					
 						}
@@ -373,7 +375,6 @@ int main(int argc, char *argv[]) {
 					if(c == delim)	
 						count++;
 					if(c == '\n') {
-						//printf("\n");
 						count = 1;
 					}	
 			
@@ -389,13 +390,13 @@ int main(int argc, char *argv[]) {
 							if(c == '\n')
 								count++;
 							continue; 
-							//printf("%c", c);
+							
 						}
 					}
 					if(count == atoi(&argv[i][j])) {
-						//printf("%c", c);
+						
 						while(fscanf(fp, "%c", &c) != EOF) {
-							//printf("%c", c);
+							
 							if(c == '\n')
 								break;
 							else
